@@ -15,6 +15,12 @@ namespace GodotModules.Netcode.Server
             GodotCmds = new ConcurrentQueue<GodotCmd>();
 
             NetworkManager.StartServer(25565, 256);
+            NetworkManager.GameServer.Lobby = new DataLobby
+            {
+                Name = "DefaultName",
+                Description = "DefaultDescription",
+                HostId = 0
+            };
         }
 
         public override void _Process(float delta)
