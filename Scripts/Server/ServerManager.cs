@@ -10,7 +10,7 @@ namespace GodotModules.Netcode.Server
     {
         private static ConcurrentQueue<GodotCmd> GodotCmds { get; set; }
 
-        public override void _Ready()
+        public override async void _Ready()
         {
             GodotCmds = new ConcurrentQueue<GodotCmd>();
 
@@ -21,6 +21,15 @@ namespace GodotModules.Netcode.Server
                 Description = "DefaultDescription",
                 HostId = 0
             };
+            await WebClient.UpdateIsAlive();
+            await WebClient.AddLobbyAsync(new LobbyListing {
+                Ip = WebClient.ExternalIp,
+                Description = "DefaultDescription",
+                LobbyHost = "DefaultLobbyHost",
+                MaxPlayerCount = 256,
+                Name = "DefaultName",
+                Port = 25565
+            });
         }
 
         public override void _Process(float delta)
